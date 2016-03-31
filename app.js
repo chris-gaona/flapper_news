@@ -5,17 +5,23 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//mongoose connection
 var mongoose = require('mongoose');
+require('./models/Posts');
+require('./models/Comments');
+mongoose.connect('mongodb://localhost/news', function(err) {
+  if (err) {
+    console.log('Failed connecting to Mongodb!');
+  } else {
+    console.log('Successfully connected to Mongodb!');
+  }
+});
+// mongoose.connect('mongodb://localhost/news');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-
-//mongoose connection
-require('./models/Posts');
-require('./models/Comments');
-mongoose.connect('mongodb://localhost/news');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,5 +69,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// app.listen(3000, function() {
+//   console.log('Frontend server is running on port 3000!');
+// });
 
 module.exports = app;
