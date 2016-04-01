@@ -8,7 +8,12 @@ app.config([
     .state('home', {
       url: '/home',
       templateUrl: '/home.html',
-      controller: 'mainCtrl'
+      controller: 'mainCtrl',
+      resolve: {
+        postPromise: ['posts', function(posts){
+          return posts.getAll();
+        }]
+      }
     })
     .state('posts', {
       url: '/posts/{id}',
@@ -19,15 +24,22 @@ app.config([
     $urlRouterProvider.otherwise('home');
 }]);
 
-app.factory('posts', [function() {
+app.factory('posts', ['$http', function($http) {
   var o = {
     posts: []
   };
+
+  o.getAll = function() {
+    return $http.get('/posts').success(function(data) {
+      angular.copy(data, o.posts);
+      console.log(data);
+    });
+  };
+
   return o;
 }]);
 
 app.controller('mainCtrl', ['$scope', 'posts', function($scope, posts) {
-  $scope.test = 'Hello World!';
 
   $scope.posts = posts.posts;
 
