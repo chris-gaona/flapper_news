@@ -2,7 +2,11 @@ var express = require('express');
 var mongoose = require('mongoose');
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
+var jwt = require('express-jwt');
 var router = express.Router();
+
+//middleware for authenticating jwt tokens
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 /////////////
 //POST ROUTES
@@ -15,8 +19,11 @@ router.get('/posts', function(req, res, next) {
   });
 });
 
-router.post('/posts', function(req, res, next) {
+router.post('/posts', auth, function(req, res, next) {
   var post = new Post(req.body);
+
+  //Set the author field when creating posts
+  post.author = req.payload.username;
 
   post.save(function(err, post){
     if(err){ return next(err); }
@@ -25,6 +32,7 @@ router.post('/posts', function(req, res, next) {
   });
 });
 
+//creates middleware for all post urls to go through first
 router.param('post', function(req, res, next, id) {
   var query = Post.findById(id);
 
@@ -48,7 +56,7 @@ router.get('/posts/:post', function(req, res) {
   });
 });
 
-router.put('/posts/:post/upvote', function(req, res, next) {
+router.put('/posts/:post/upvote', auth, function(req, res, next) {
   req.post.upvote(function(err, post) {
     if (err) {return next(err);}
 
@@ -59,9 +67,12 @@ router.put('/posts/:post/upvote', function(req, res, next) {
 ////////////////
 //COMMENT ROUTES
 ////////////////
-router.post('/posts/:post/comments', function(req, res, next) {
+router.post('/posts/:post/comments', auth, function(req, res, next) {
   var comment = new Comment(req.body);
   comment.post = req.post;
+
+  //Set the author field when creating comments
+  comment.author = req.payload.username;
 
   comment.save(function(err, comment) {
     if (err) {return next(err);}
@@ -75,6 +86,7 @@ router.post('/posts/:post/comments', function(req, res, next) {
   });
 });
 
+//creates middleware for all comment urls to go through first
 router.param('comment', function(req, res, next, id) {
   var query = Comment.findById(id);
 
@@ -90,7 +102,7 @@ router.param('comment', function(req, res, next, id) {
   });
 });
 
-router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
+router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, next) {
   req.comment.upvote(function(err, comment) {
     if (err) {return next(err);}
 
