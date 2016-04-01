@@ -18,7 +18,12 @@ app.config([
     .state('posts', {
       url: '/posts/{id}',
       templateUrl: '/posts.html',
-      controller: 'postsCtrl'
+      controller: 'postsCtrl',
+      resolve: {
+        post: ['$stateParams', 'posts', function($stateParams, posts) {
+          return posts.get($stateParams.id);
+        }]
+      }
     });
 
     $urlRouterProvider.otherwise('home');
@@ -47,13 +52,31 @@ app.factory('posts', ['$http', function($http) {
     return $http.put('/posts/' + post._id + '/upvote').success(function(data) {
       post.upvotes += 1;
     });
-  }
+  };
+
+  o.get = function(id) {
+    return $http.get('/posts/' + id).then(function(res) {
+      return res.data;
+    });
+  };
+
+  o.addComment = function(id, comment) {
+    return $http.post('/posts/' + id + '/comments', comment);
+  };
+
+  o.upvoteComment = function(post, comment) {
+    return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote')
+    .success(function(data) {
+      comment.upvotes += 1;
+    });
+  };
 
   return o;
 }]);
 
 app.controller('mainCtrl', ['$scope', 'posts', function($scope, posts) {
 
+  //used to display all posts
   $scope.posts = posts.posts;
 
   $scope.addPost = function() {
@@ -74,18 +97,25 @@ app.controller('mainCtrl', ['$scope', 'posts', function($scope, posts) {
   };
 }]);
 
-app.controller('postsCtrl', ['$scope', '$stateParams', 'posts', function($scope, $stateParams, posts) {
-  $scope.post = posts.posts[$stateParams.id];
+app.controller('postsCtrl', ['$scope', 'posts', 'post', function($scope, posts, post) {
+  //used to get individual posts
+  $scope.post = post;
 
   $scope.addComment = function() {
     if ($scope.body === '') {
       return;
     }
-    $scope.post.comments.push({
+
+    posts.addComment(post._id, {
       body: $scope.body,
       author: 'user',
-      upvotes: 0
+    }).success(function(comment) {
+      $scope.post.comments.push(comment);
     });
     $scope.body = '';
-  }
+  };
+
+  $scope.incrementUpvotes = function(comment) {
+    posts.upvoteComment(post, comment);
+  };
 }]);
