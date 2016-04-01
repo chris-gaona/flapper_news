@@ -29,12 +29,25 @@ app.factory('posts', ['$http', function($http) {
     posts: []
   };
 
+  //get all posts
   o.getAll = function() {
     return $http.get('/posts').success(function(data) {
       angular.copy(data, o.posts);
-      console.log(data);
     });
   };
+
+  //create new posts
+  o.create = function(post) {
+    return $http.post('/posts', post).success(function(data) {
+      o.posts.push(data);
+    });
+  };
+
+  o.upvote = function(post) {
+    return $http.put('/posts/' + post._id + '/upvote').success(function(data) {
+      post.upvotes += 1;
+    });
+  }
 
   return o;
 }]);
@@ -43,33 +56,21 @@ app.controller('mainCtrl', ['$scope', 'posts', function($scope, posts) {
 
   $scope.posts = posts.posts;
 
-  // $scope.posts = [
-  //   {title: 'post 1', upvotes: 5},
-  //   {title: 'post 2', upvotes: 2},
-  //   {title: 'post 3', upvotes: 15},
-  //   {title: 'post 4', upvotes: 9},
-  //   {title: 'post 5', upvotes: 4}
-  // ];
-
   $scope.addPost = function() {
     if (!$scope.title || $scope.title === '') {
       return;
     }
-    $scope.posts.push({
+
+    posts.create({
       title: $scope.title,
-      link: $scope.link,
-      upvotes: 0,
-      comments: [
-        {author: 'Joe', body: 'Cool post!', upvotes: 0},
-        {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}
-      ]
+      link: $scope.link
     });
     $scope.title = '';
     $scope.link = '';
   };
 
   $scope.incrementUpvotes = function(post) {
-    post.upvotes += 1;
+    posts.upvote(post);
   };
 }]);
 
