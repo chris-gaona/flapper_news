@@ -8,19 +8,38 @@
     function($stateProvider, $urlRouterProvider) {
       $stateProvider
       .state('home', {
+        parent: 'root',
         url: '/home',
-        templateUrl: '/home.html',
-        controller: 'mainCtrl',
+        views: {
+          'container@': {
+            templateUrl: '/partials/home',
+            controller: 'mainCtrl',
+          }
+        },
         resolve: {
           postPromise: ['posts', function(posts){
             return posts.getAll();
           }]
         }
       })
+      .state('root', {
+        abstract: true,
+        views: {
+          'navbar': {
+            templateUrl: 'partials/navbar',
+            controller: 'navCtrl'
+          }
+        }
+      })
       .state('posts', {
+        parent: 'root',
         url: '/posts/{id}',
-        templateUrl: '/posts.html',
-        controller: 'postsCtrl',
+        views: {
+          'container@': {
+            templateUrl: '/partials/post',
+            controller: 'postsCtrl',
+          }
+        },
         resolve: {
           post: ['$stateParams', 'posts', function($stateParams, posts) {
             return posts.get($stateParams.id);
@@ -32,9 +51,14 @@
       //before entering the state, which allows us to redirect them back to the
       //home state if they're already logged in
       .state('login', {
+        parent: 'root',
         url: '/login',
-        templateUrl: '/login.html',
-        controller: 'AuthCtrl',
+        views: {
+          'container@': {
+            templateUrl: '/partials/login',
+            controller: 'AuthCtrl',
+          }
+        },
         onEnter: ['$state', 'auth', function($state, auth) {
           if(auth.isLoggedIn()) {
             $state.go('home');
@@ -44,8 +68,13 @@
 
       .state('register', {
         url: '/register',
-        templateUrl: '/register.html',
-        controller: 'AuthCtrl',
+        parent: 'root',
+        views: {
+          'container@': {
+            templateUrl: '/partials/register',
+            controller: 'AuthCtrl',
+          }
+        },
         onEnter: ['$state', 'auth', function($state, auth) {
           if (auth.isLoggedIn()) {
             $state.go('home');
