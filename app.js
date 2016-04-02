@@ -9,21 +9,16 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 require('./models/Posts');
 require('./models/Comments');
-mongoose.connect('mongodb://localhost/news', function(err) {
-  if (err) {
-    console.log('Failed connecting to Mongodb!');
-  } else {
-    console.log('Successfully connected to Mongodb!');
-  }
-});
+require('./config/database');
 
 //passport
 var passport = require('passport');
 require('./models/Users');
 require('./config/passport');
 
+//routes
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/users'); // TODO: decide whether to use this route
 var partialsRoutes = require('./routes/partials');
 var postsRoutes = require('./routes/posts');
 var commentsRoutes = require('./routes/comments');
@@ -47,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/users', users); // TODO: decide whether to use this route
 app.use('/', partialsRoutes);
 app.use('/', postsRoutes);
 app.use('/', commentsRoutes);
@@ -83,9 +78,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-// app.listen(3000, function() {
-//   console.log('Frontend server is running on port 3000!');
-// });
 
 module.exports = app;
