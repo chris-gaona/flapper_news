@@ -146,6 +146,15 @@
       }
     };
 
+    auth.currentUserId = function() {
+      if (auth.isLoggedIn()) {
+        var token = auth.getToken();
+        var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+        return payload._id;
+      }
+    };
+
     //register function that posts a user to our /register route and saves the token returned
     auth.register = function(user){
       return $http.post('/register', user).success(function(data){
@@ -216,6 +225,7 @@
     $scope.incrementUpvotes = function(comment) {
       posts.upvoteComment(post, comment);
     };
+
   }]);
 
   app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state, auth) {
