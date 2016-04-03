@@ -4,6 +4,10 @@ var PostSchema = new mongoose.Schema({
   title: String,
   link: String,
   author: String,
+  date: {
+    type: Date, 
+    default: Date.now
+  },
   upvotes: {
     type: Number,
     default: 0

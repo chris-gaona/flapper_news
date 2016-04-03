@@ -11,6 +11,6 @@
     'ui.router'
   ]);
 
-  // TODO: make posts filter by date/time created not by upvotes
+  // TODO: 
 
 })();
