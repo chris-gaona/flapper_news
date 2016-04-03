@@ -5,7 +5,8 @@
 
   app.config([
     '$stateProvider',
-    function($stateProvider) {
+    '$urlRouterProvider',
+    function($stateProvider, $urlRouterProvider) {
       $stateProvider
       .state('home', {
         parent: 'root',
@@ -22,8 +23,12 @@
           }]
         }
       })
-    }
+
+      $urlRouterProvider.otherwise('home');
+
+    }  
   ]);
+
 
   app.controller('mainCtrl', ['$scope', 'postService', 'authService', function($scope, postService, authService) {
 

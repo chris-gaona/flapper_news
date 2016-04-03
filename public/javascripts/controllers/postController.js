@@ -5,7 +5,8 @@
 
   app.config([
     '$stateProvider',
-    function($stateProvider){
+    '$urlRouterProvider',
+    function($stateProvider, $urlRouterProvider){
       $stateProvider
       .state('posts', {
         parent: 'root',
@@ -22,8 +23,12 @@
           }]
         }
       });
+
+      $urlRouterProvider.otherwise('home');
+      
     }
   ]);
+
 
   app.controller('postsCtrl', ['$scope', 'postService', 'post', 'authService', function($scope, postService, post, authService) {
     //used to get individual posts

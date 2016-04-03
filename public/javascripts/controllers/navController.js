@@ -5,7 +5,8 @@
 
   app.config([
     '$stateProvider',
-    function($stateProvider) {
+    '$urlRouterProvider',
+    function($stateProvider, $urlRouterProvider) {
       $stateProvider
       .state('root', {
         abstract: true,
@@ -16,8 +17,12 @@
           }
         }
       });
+
+      $urlRouterProvider.otherwise('home');
+      
     }
   ]);
+
 
   app.controller('navCtrl', ['$scope', 'authService', function($scope, authService) {
     $scope.isLoggedIn = authService.isLoggedIn;
