@@ -27,7 +27,10 @@
   router.post('/posts', auth, function(req, res, next) {
     var post = new Post(req.body);
 
+    //prevents user who created post from placing upvote
     post.usersWhoUpvoted.push(req.payload._id);
+
+    post.author = req.payload.username;
 
     //Set the author field when creating posts
     post.author = req.payload.username;
@@ -48,6 +51,7 @@
   });
 
   router.put('/posts/:post/upvote', auth, function(req, res, next) {
+    //req.payload give user infor to Posts.js model method
     req.post.upvote(req.payload, function(err, post) {
       if (err) {return next(err);}
 

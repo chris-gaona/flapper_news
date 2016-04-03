@@ -49,8 +49,8 @@
     o.upvoteComment = function(post, comment) {
       return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
-      }).success(function(upvotedPost) {
-        angular.copy(upvotedPost, post);
+      }).success(function(upvotedComment) {
+        angular.copy(upvotedComment, comment);
         // comment.upvotes += 1;
       });
     };

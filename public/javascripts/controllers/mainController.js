@@ -54,9 +54,17 @@
       postService.upvote(post);
     };
 
-    // $scope.isUpvotedByCurrentUser = function(post) {
-    //   return post.usersWhoUpvoted.indexOf(authService.currentUserId()) != 1;
-    // };
+    $scope.getUpvotedColor = function(post) {
+      if (isUpvotedByCurrentUser(post)) {
+        return 'text-primary';
+      } else {
+        return 'text-muted';
+      }
+    };
+
+    function isUpvotedByCurrentUser(post) {
+      return post.usersWhoUpvoted.indexOf(authService.currentUserId()) != -1;
+    };
 
   }]);
 
