@@ -2,6 +2,8 @@
   'use strict';
 
   var app = angular.module('flapperNews', [
+    'flapperNews.controllers.main',
+    'flapperNews.controllers.post',
     'flapperNews.services.post',
     'flapperNews.services.auth',
     'ui.router'
@@ -12,21 +14,6 @@
     '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
       $stateProvider
-      .state('home', {
-        parent: 'root',
-        url: '/home',
-        views: {
-          'container@': {
-            templateUrl: '/partials/home',
-            controller: 'mainCtrl',
-          }
-        },
-        resolve: {
-          postPromise: ['postService', function(postService){
-            return postService.getAll();
-          }]
-        }
-      })
       .state('root', {
         abstract: true,
         views: {
@@ -34,21 +21,6 @@
             templateUrl: 'partials/navbar',
             controller: 'navCtrl'
           }
-        }
-      })
-      .state('posts', {
-        parent: 'root',
-        url: '/posts/{id}',
-        views: {
-          'container@': {
-            templateUrl: '/partials/post',
-            controller: 'postsCtrl',
-          }
-        },
-        resolve: {
-          post: ['$stateParams', 'postService', function($stateParams, postService) {
-            return postService.get($stateParams.id);
-          }]
         }
       })
 
@@ -95,58 +67,11 @@
 
 
 
-  app.controller('mainCtrl', ['$scope', 'postService', 'authService', function($scope, postService, authService) {
 
-    //used to display all posts
-    $scope.posts = postService.posts;
 
-    $scope.isLoggedIn = authService.isLoggedIn;
 
-    $scope.addPost = function() {
-      if (!$scope.title || $scope.title === '') {
-        return;
-      }
 
-      postService.create({
-        title: $scope.title,
-        link: $scope.link
-      });
-      $scope.title = '';
-      $scope.link = '';
-    };
 
-    $scope.incrementUpvotes = function(post) {
-      postService.upvote(post);
-    };
-  }]);
-
-  
-
-  app.controller('postsCtrl', ['$scope', 'postService', 'post', 'authService', function($scope, postService, post, authService) {
-    //used to get individual posts
-    $scope.post = post;
-
-    $scope.isLoggedIn = authService.isLoggedIn;
-
-    $scope.addComment = function() {
-      if ($scope.body === '') {
-        return;
-      }
-
-      postService.addComment(post._id, {
-        body: $scope.body,
-        author: 'user',
-      }).success(function(comment) {
-        $scope.post.comments.push(comment);
-      });
-      $scope.body = '';
-    };
-
-    $scope.incrementUpvotes = function(comment) {
-      postService.upvoteComment(post, comment);
-    };
-
-  }]);
 
   app.controller('AuthCtrl', ['$scope', '$state', 'authService', function($scope, $state, authService) {
     $scope.user = {};
