@@ -3,6 +3,10 @@ var mongoose = require('mongoose');
 var CommentSchema = new mongoose.Schema({
   body: String,
   author: String,
+  date: {
+    type: Date,
+    default: Date.now
+  },
   upvotes: {
     type: Number,
     default: 0
