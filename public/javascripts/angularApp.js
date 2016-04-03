@@ -4,6 +4,7 @@
   var app = angular.module('flapperNews', [
     'flapperNews.controllers.main',
     'flapperNews.controllers.post',
+    'flapperNews.controllers.nav',
     'flapperNews.services.post',
     'flapperNews.services.auth',
     'ui.router'
@@ -14,16 +15,6 @@
     '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
       $stateProvider
-      .state('root', {
-        abstract: true,
-        views: {
-          'navbar': {
-            templateUrl: 'partials/navbar',
-            controller: 'navCtrl'
-          }
-        }
-      })
-
       //onEnter gives us the ability to detect if the user is authenticated
       //before entering the state, which allows us to redirect them back to the
       //home state if they're already logged in
@@ -91,12 +82,6 @@
         $state.go('home');
       });
     };
-  }]);
-
-  app.controller('navCtrl', ['$scope', 'authService', function($scope, authService) {
-    $scope.isLoggedIn = authService.isLoggedIn;
-    $scope.currentUser = authService.currentUser;
-    $scope.logOut = authService.logOut;
   }]);
 
 })();
