@@ -27,6 +27,8 @@
   router.post('/posts', auth, function(req, res, next) {
     var post = new Post(req.body);
 
+    post.usersWhoUpvoted.push(req.payload._id);
+
     //Set the author field when creating posts
     post.author = req.payload.username;
 
@@ -46,7 +48,7 @@
   });
 
   router.put('/posts/:post/upvote', auth, function(req, res, next) {
-    req.post.upvote(function(err, post) {
+    req.post.upvote(req.payload, function(err, post) {
       if (err) {return next(err);}
 
       res.json(post);

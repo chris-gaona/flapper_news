@@ -25,7 +25,7 @@
       });
 
       $urlRouterProvider.otherwise('home');
-      
+
     }
   ]);
 
@@ -53,6 +53,10 @@
     $scope.incrementUpvotes = function(comment) {
       postService.upvoteComment(post, comment);
     };
+
+    // $scope.isUpvotedByCurrentUser = function(comment) {
+    //   return comment.usersWhoUpvoted.indexOf(authService.currentUserId()) != 1;
+    // };
 
   }]);
 

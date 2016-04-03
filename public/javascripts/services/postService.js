@@ -28,8 +28,9 @@
     o.upvote = function(post) {
       return $http.put('/posts/' + post._id + '/upvote', null, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
-      }).success(function(data) {
-        post.upvotes += 1;
+      }).success(function(upvotedPost) {
+        angular.copy(upvotedPost, post);
+        // post.upvotes += 1;
       });
     };
 
@@ -48,8 +49,9 @@
     o.upvoteComment = function(post, comment) {
       return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
-      }).success(function(data) {
-        comment.upvotes += 1;
+      }).success(function(upvotedPost) {
+        angular.copy(upvotedPost, post);
+        // comment.upvotes += 1;
       });
     };
 

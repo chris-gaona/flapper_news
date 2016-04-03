@@ -19,6 +19,8 @@
     var comment = new Comment(req.body);
     comment.post = req.post;
 
+    comment.usersWhoUpvoted.push(req.payload._id);
+
     //Set the author field when creating comments
     comment.author = req.payload.username;
 
@@ -35,7 +37,7 @@
   });
 
   router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, next) {
-    req.comment.upvote(function(err, comment) {
+    req.comment.upvote(req.payload, function(err, comment) {
       if (err) {return next(err);}
 
       res.json(comment);
