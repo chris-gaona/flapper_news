@@ -14,7 +14,9 @@
     userProperty: 'payload'
   });
 
-
+  router.get('/user/:username', function(req, res) {
+    res.send('got a user!');
+  });
 
   module.exports = router;
 

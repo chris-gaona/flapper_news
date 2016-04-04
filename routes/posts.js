@@ -30,9 +30,7 @@
     //prevents user who created post from placing upvote
     post.usersWhoUpvoted.push(req.payload._id);
 
-    post.author = req.payload.username;
-
-    //Set the author field when creating posts
+    //adds author to post from json web token payload
     post.author = req.payload.username;
 
     post.save(function(err, post){

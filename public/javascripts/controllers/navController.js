@@ -3,6 +3,7 @@
 
   var app = angular.module('flapperNews.controllers.nav', ['ui.router']);
 
+  //this is considered the parent state
   app.config([
     '$stateProvider',
     '$urlRouterProvider',
@@ -19,7 +20,7 @@
       });
 
       $urlRouterProvider.otherwise('home');
-      
+
     }
   ]);
 

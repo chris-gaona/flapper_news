@@ -6,7 +6,7 @@
   app.config([
     '$stateProvider',
     '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider){
+    function($stateProvider, $urlRouterProvider) {
       $stateProvider
       .state('posts', {
         parent: 'root',
@@ -14,7 +14,7 @@
         views: {
           'container@': {
             templateUrl: '/partials/post',
-            controller: 'postsCtrl',
+            controller: 'postsCtrl'
           }
         },
         resolve: {

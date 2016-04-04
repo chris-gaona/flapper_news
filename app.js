@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  
+
   var express = require('express');
   var path = require('path');
   var favicon = require('serve-favicon');
@@ -21,7 +21,7 @@
 
   //routes
   var routes = require('./routes/index');
-  var users = require('./routes/users'); // TODO: decide whether to use this route
+  var users = require('./routes/users');
   var partialsRoutes = require('./routes/partials');
   var postsRoutes = require('./routes/posts');
   var commentsRoutes = require('./routes/comments');
@@ -45,7 +45,7 @@
   app.use(passport.initialize());
 
   app.use('/', routes);
-  app.use('/users', users); // TODO: decide whether to use this route
+  app.use('/', users);
   app.use('/', partialsRoutes);
   app.use('/', postsRoutes);
   app.use('/', commentsRoutes);
