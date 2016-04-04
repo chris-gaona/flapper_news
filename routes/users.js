@@ -14,8 +14,14 @@
     userProperty: 'payload'
   });
 
-  router.get('/user/:username', function(req, res) {
+  router.get('/user/:username', auth, function(req, res, next) {
     var user = req.params.username;
+
+    // if (req.payload.username != user) {
+    //   return res.status(401).json({
+    //     message: 'You cannot access this page'
+    //   });
+    // }
 
     User.findOne({username: user}, '_id username userPosts', function(err, user) {
       if (err) {return next(err);}

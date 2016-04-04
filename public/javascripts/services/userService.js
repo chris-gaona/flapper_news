@@ -7,7 +7,9 @@
     var user = {};
 
     user.getUser = function(username) {
-      return $http.get('/user/' + username).then(function(res) {
+      return $http.get('/user/' + username, {
+        headers: {Authorization: 'Bearer '+authService.getToken()}
+      }).then(function(res) {
         return res.data;
       });
     };
