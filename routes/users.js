@@ -17,11 +17,17 @@
   router.get('/user/:username', function(req, res) {
     var user = req.params.username;
 
-    User.findOne({username: user}, '_id username', function(err, user) {
+    User.findOne({username: user}, '_id username userPosts', function(err, user) {
       if (err) {return next(err);}
       console.log(user);
-      res.json(user);
+      // res.json(user);
+      user.populate('userPosts', function(err, user) {
+        if (err) {return next(err);}
+
+        res.json(user);
+      });
     });
+
   });
 
   module.exports = router;

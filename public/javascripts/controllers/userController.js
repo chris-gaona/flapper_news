@@ -31,6 +31,7 @@
 
   app.controller('usersCtrl', ['$scope', 'postService', 'authService', 'user', function($scope, postService, authService, user) {
     $scope.user = user;
+
   }]);
 
 })();

@@ -19,6 +19,10 @@ var PostSchema = new mongoose.Schema({
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
+  }],
+  user: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }]
 });
 
@@ -35,7 +39,6 @@ PostSchema.methods.upvote = function(user, cb) {
     this.save(cb);
   }
 
-  console.log('USERID ' + user._id);
   // this.upvotes += 1;
   // this.save(cb);
 };

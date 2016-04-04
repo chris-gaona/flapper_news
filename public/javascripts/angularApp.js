@@ -15,6 +15,8 @@
 
   // TODO: add post delete functionality
   // TODO: add user personal page functionality
+      // TODO: add authorization to personal page
+      // TODO: make only current user access their page
   // TODO: make header, nav, & footer main parent state
 
 })();

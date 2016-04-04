@@ -33,6 +33,18 @@
     //adds author to post from json web token payload
     post.author = req.payload.username;
 
+    User.findOne({username: req.payload.username}, 'userPosts', function(err, user) {
+      if (err) {return next(err);}
+      // res.json(user);
+      user.userPosts.push(post);
+
+      user.save(function(err, user) {
+        if(err){ return next(err); }
+
+        console.log('Success!');
+      });
+    });
+
     post.save(function(err, post){
       if(err){ return next(err); }
 

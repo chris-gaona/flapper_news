@@ -34,7 +34,6 @@ CommentSchema.methods.upvote = function(user, cb) {
     this.save(cb);
   }
 
-  console.log('USERID ' + user._id);
   // this.upvotes += 1;
   // this.save(cb);
 };
