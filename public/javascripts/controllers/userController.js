@@ -14,8 +14,13 @@
         views: {
           'container@': {
             templateUrl: '/partials/user',
-            controllers: 'usersCtrl'
+            controller: 'usersCtrl'
           }
+        },
+        resolve: {
+          user: ['$stateParams', 'userService', function($stateParams, userService) {
+            return userService.getUser($stateParams.username);
+          }]
         }
       });
 
@@ -24,8 +29,8 @@
     }
   ]);
 
-  app.controller('usersCtrl', ['$scope', 'postService', 'authService', function($scope, postService, authService) {
-    $scope.user = 'user';
+  app.controller('usersCtrl', ['$scope', 'postService', 'authService', 'user', function($scope, postService, authService, user) {
+    $scope.user = user;
   }]);
 
 })();

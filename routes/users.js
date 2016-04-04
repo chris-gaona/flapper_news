@@ -15,7 +15,13 @@
   });
 
   router.get('/user/:username', function(req, res) {
-    res.send('got a user!');
+    var user = req.params.username;
+
+    User.findOne({username: user}, '_id username', function(err, user) {
+      if (err) {return next(err);}
+      console.log(user);
+      res.json(user);
+    });
   });
 
   module.exports = router;

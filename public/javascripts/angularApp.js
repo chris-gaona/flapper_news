@@ -9,6 +9,7 @@
     'flapperNews.controllers.user',
     'flapperNews.services.post',
     'flapperNews.services.auth',
+    'flapperNews.services.user',
     'ui.router'
   ]);
 
