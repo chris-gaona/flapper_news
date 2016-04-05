@@ -46,6 +46,10 @@
       $scope.link = '';
     };
 
+    // $scope.deletePost = function(post) {
+    //   postService.deletePost(post);
+    // };
+
     $scope.incrementUpvotes = function(post) {
       postService.upvote(post);
     };

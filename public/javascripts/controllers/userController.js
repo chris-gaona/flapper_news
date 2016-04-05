@@ -25,17 +25,19 @@
     }
   ])
 
-  .controller('usersCtrl', ['$scope', 'postService', 'authService', 'user', function($scope, postService, authService, user) {
-    $scope.user = user;
+  .controller('usersCtrl', ['$scope', 'postService', 'authService', 'userService', function($scope, postService, authService, userService) {
+    $scope.user = userService.userStuff.data;
 
     //checks if user is owner of user personal page visited
-    if (authService.currentUserId() != user._id) {
+    if (authService.currentUserId() != userService.userStuff.data._id) {
       $scope.isCorrectUser = false;
     } else {
       $scope.isCorrectUser = true;
     }
 
-    // $scope.isCorrectUser = authService.isLoggedIn;
+    $scope.deletePost = function(post) {
+      userService.deleteUserPost(post);
+    };
 
     $scope.incrementUpvotes = function(post) {
       postService.upvote(post);

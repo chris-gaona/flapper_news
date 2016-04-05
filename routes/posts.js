@@ -6,7 +6,7 @@
 
   var mongoose = require('mongoose');
   var Post = mongoose.model('Post');
-  var Comment = mongoose.model('Post');
+  var Comment = mongoose.model('Comment');
   var User = mongoose.model('User');
 
   var jwt = require('express-jwt');
@@ -52,6 +52,41 @@
     });
   });
 
+  router.delete('/posts/:post', auth, function(req, res, next) {
+    if(req.post.author != req.payload.username) {
+      console.log('sorry no can do');
+      return res.status(401).send("invalid authorization");
+    }
+
+    console.log('you have access');
+
+    Comment.remove({post: req.params.post}, function(err) {
+      if (err) {return next(err);}
+      console.log('Comment deleted');
+
+      req.post.remove(function(err) {
+        if (err) {return next(err);}
+
+        console.log('Post deleted');
+        res.send('Post Deleted');
+      });
+    });
+
+    //find correct user in order to remove connected to deleted post
+    User.findOne({_id: req.payload._id}, 'userPosts', function(err, user) {
+      if (err) {return next(err);}
+
+      //splice out the deleted post from userPosts array
+      user.userPosts.splice(user.userPosts.indexOf(req.params.post), 1);
+
+      user.save(function(err, user) {
+        if(err){ return next(err); }
+
+        console.log('user post info deleted');
+      });
+    });
+  });
+
   router.get('/posts/:post', function(req, res) {
     req.post.populate('comments', function(err, post) {
       if (err) {return next(err);}
@@ -61,7 +96,7 @@
   });
 
   router.put('/posts/:post/upvote', auth, function(req, res, next) {
-    //req.payload give user infor to Posts.js model method
+    //req.payload give user info to Posts.js model method
     req.post.upvote(req.payload, function(err, post) {
       if (err) {return next(err);}
 

@@ -3,7 +3,7 @@
 
   angular.module('flapperNews')
 
-  .factory('postService', ['$http', 'authService', function($http, authService) {
+  .factory('postService', ['$http', 'authService', 'userService', function($http, authService, userService) {
     var o = {
       posts: []
     };

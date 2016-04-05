@@ -38,7 +38,9 @@
   }]);
 
   // TODO: add post delete functionality
+      // TODO: user can only delete their own posts / comments
       // TODO: if you delete post all comments under it are deleted
       // TODO: if you delete a comment...everything else stays as is
+  // TODO: query usernames to make sure user you registers has unique username
 
 })();
