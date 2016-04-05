@@ -32,6 +32,22 @@
   app.controller('usersCtrl', ['$scope', 'postService', 'authService', 'user', function($scope, postService, authService, user) {
     $scope.user = user;
 
+    $scope.incrementUpvotes = function(post) {
+      postService.upvote(post);
+    };
+
+    $scope.getUpvotedColor = function(post) {
+      if (isUpvotedByCurrentUser(post)) {
+        return 'text-primary';
+      } else {
+        return 'text-muted';
+      }
+    };
+
+    function isUpvotedByCurrentUser(post) {
+      return post.usersWhoUpvoted.indexOf(authService.currentUserId()) != -1;
+    };
+
   }]);
 
 })();
