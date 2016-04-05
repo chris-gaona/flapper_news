@@ -1,12 +1,11 @@
 (function() {
   'use strict';
 
-  var app = angular.module('flapperNews.controllers.user', ['ui.router']);
+  angular.module('flapperNews')
 
-  app.config([
+  .config([
     '$stateProvider',
-    '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+    function($stateProvider) {
       $stateProvider
       .state('users', {
         parent: 'root',
@@ -23,13 +22,10 @@
           }]
         }
       });
-
-      $urlRouterProvider.otherwise('home');
-
     }
-  ]);
+  ])
 
-  app.controller('usersCtrl', ['$scope', 'postService', 'authService', 'user', function($scope, postService, authService, user) {
+  .controller('usersCtrl', ['$scope', 'postService', 'authService', 'user', function($scope, postService, authService, user) {
     $scope.user = user;
 
     $scope.incrementUpvotes = function(post) {

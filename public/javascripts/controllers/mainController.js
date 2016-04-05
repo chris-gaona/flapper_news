@@ -1,12 +1,11 @@
 (function() {
   'use strict';
 
-  var app = angular.module('flapperNews.controllers.main', ['ui.router']);
+  angular.module('flapperNews')
 
-  app.config([
+  .config([
     '$stateProvider',
-    '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+    function($stateProvider) {
       $stateProvider
       .state('home', {
         parent: 'root',
@@ -22,15 +21,12 @@
             return postService.getAll();
           }]
         }
-      })
-
-      $urlRouterProvider.otherwise('home');
-
+      });
     }
-  ]);
+  ])
 
 
-  app.controller('mainCtrl', ['$scope', 'postService', 'authService', function($scope, postService, authService) {
+  .controller('mainCtrl', ['$scope', 'postService', 'authService', function($scope, postService, authService) {
 
     //used to display all posts
     $scope.posts = postService.posts;

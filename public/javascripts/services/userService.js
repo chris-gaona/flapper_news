@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
-  var app = angular.module('flapperNews.services.user', []);
+  angular.module('flapperNews')
 
-  app.factory('userService', ['$http', 'authService', function($http, authService) {
+  .factory('userService', ['$http', 'authService', function($http, authService) {
     var user = {};
 
     user.getUser = function(username) {

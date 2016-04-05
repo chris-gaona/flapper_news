@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
-  var app = angular.module('flapperNews.services.post', []);
+  angular.module('flapperNews')
 
-  app.factory('postService', ['$http', 'authService', function($http, authService) {
+  .factory('postService', ['$http', 'authService', function($http, authService) {
     var o = {
       posts: []
     };

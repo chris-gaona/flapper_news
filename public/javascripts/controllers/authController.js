@@ -1,12 +1,11 @@
 (function() {
   'use strict';
 
-  var app = angular.module('flapperNews.controllers.auth', ['ui.router']);
+  angular.module('flapperNews')
 
-  app.config([
+  .config([
     '$stateProvider',
-    '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+    function($stateProvider) {
       $stateProvider
       //onEnter gives us the ability to detect if the user is authenticated
       //before entering the state, which allows us to redirect them back to the
@@ -42,14 +41,11 @@
           }
         }]
       });
-
-      $urlRouterProvider.otherwise('home');
-      
     }
-  ]);
+  ])
 
 
-  app.controller('AuthCtrl', ['$scope', '$state', 'authService', function($scope, $state, authService) {
+  .controller('AuthCtrl', ['$scope', '$state', 'authService', function($scope, $state, authService) {
     $scope.user = {};
 
     $scope.register = function() {

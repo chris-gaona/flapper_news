@@ -1,10 +1,10 @@
 (function() {
   'use strict';
 
-  var app = angular.module('flapperNews.services.auth', []);
+  angular.module('flapperNews')
 
   //create initial auth factory. We'll need to inject $http for interfacing with our server, and $window for interfacing with localStorage
-  app.factory('authService', ['$http', '$window', function($http, $window) {
+  .factory('authService', ['$http', '$window', function($http, $window) {
     var auth = {};
 
     //save token in local storage
