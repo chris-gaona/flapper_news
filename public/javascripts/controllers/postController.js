@@ -62,6 +62,15 @@
       return comment.usersWhoUpvoted.indexOf(authService.currentUserId()) != -1;
     };
 
+    //checks if user is owner of user personal page visited
+    $scope.isCorrectUser = function(comment) {
+      if (authService.currentUser() != comment.author) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
   }]);
 
 })();

@@ -18,7 +18,7 @@
     </span>
   </span>
   <span ng-show="post.author">
-    posted by <a href="#/user/{{post.author}}">{{post.author}}</a>
+    posted by {{post.author}}</a>
   </span>
   <span ng-show="post.date">
     on {{post.date | date}} at {{post.date | date : 'shortTime'}} |
@@ -26,5 +26,8 @@
   <span>
       <a href="#/posts/{{post._id}}">Comments</a>
       ({{post.comments.length}})
+  </span>
+  <span ng-show="isCorrectUser">
+    | <a href="" ng-click="deletePost()">Delete</a>
   </span>
 </div>

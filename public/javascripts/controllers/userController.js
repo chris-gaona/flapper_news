@@ -28,6 +28,15 @@
   .controller('usersCtrl', ['$scope', 'postService', 'authService', 'user', function($scope, postService, authService, user) {
     $scope.user = user;
 
+    //checks if user is owner of user personal page visited
+    if (authService.currentUserId() != user._id) {
+      $scope.isCorrectUser = false;
+    } else {
+      $scope.isCorrectUser = true;
+    }
+
+    // $scope.isCorrectUser = authService.isLoggedIn;
+
     $scope.incrementUpvotes = function(post) {
       postService.upvote(post);
     };

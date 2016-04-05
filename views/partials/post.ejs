@@ -16,6 +16,9 @@
   <span style="font-size:20px; margin-left:10px;">
     {{comment.body}}
   </span>
+  <span ng-show="isCorrectUser(comment)">
+    | <a href="" ng-click="deleteComment()">Delete</a>
+  </span>
 </div>
 
 <div ng-hide="isLoggedIn()">

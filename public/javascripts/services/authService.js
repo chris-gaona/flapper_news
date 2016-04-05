@@ -18,7 +18,7 @@
     };
 
     //return a boolean value for if the user is logged in
-    auth.isLoggedIn = function(){
+    auth.isLoggedIn = function() {
       var token = auth.getToken();
 
       if(token){
@@ -31,7 +31,7 @@
     };
 
     //function currentUser() that returns the username of the user that's logged in
-    auth.currentUser = function(){
+    auth.currentUser = function() {
       if(auth.isLoggedIn()){
         var token = auth.getToken();
         var payload = JSON.parse($window.atob(token.split('.')[1]));
@@ -50,21 +50,21 @@
     };
 
     //register function that posts a user to our /register route and saves the token returned
-    auth.register = function(user){
+    auth.register = function(user) {
       return $http.post('/register', user).success(function(data){
         auth.saveToken(data.token);
       });
     };
 
     // login function that posts a user to our /login route and saves the token returned
-    auth.logIn = function(user){
+    auth.logIn = function(user) {
       return $http.post('/login', user).success(function(data){
         auth.saveToken(data.token);
       });
     };
 
     //logout function that removes the user's token from localStorage, logging the user out.
-    auth.logOut = function(){
+    auth.logOut = function() {
       $window.localStorage.removeItem('flapper-news-token');
     };
 
