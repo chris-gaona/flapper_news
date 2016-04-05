@@ -24,6 +24,10 @@
           'navbar': {
             templateUrl: 'partials/navbar',
             controller: 'navCtrl'
+          },
+          'footer': {
+            templateUrl: 'partials/footer',
+            controller: ''
           }
         }
       });
@@ -41,6 +45,5 @@
   }]);
 
   // TODO: add post delete functionality
-  // TODO: make header, nav, & footer main parent state
 
 })();
