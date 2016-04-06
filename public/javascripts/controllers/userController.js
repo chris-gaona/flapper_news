@@ -37,6 +37,7 @@
 
     $scope.deletePost = function(post) {
       userService.deleteUserPost(post);
+      $scope.user.userPosts.splice($scope.user.userPosts.indexOf(post), 1);
     };
 
     $scope.incrementUpvotes = function(post) {

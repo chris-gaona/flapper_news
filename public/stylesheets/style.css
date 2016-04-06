@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+.remove {
+  opacity: 0;
+  transition: all 0.3s;
+}

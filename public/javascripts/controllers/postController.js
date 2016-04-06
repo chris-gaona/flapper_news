@@ -26,7 +26,7 @@
   ])
 
 
-  .controller('postsCtrl', ['$scope', 'postService', 'post', 'authService', function($scope, postService, post, authService) {
+  .controller('postsCtrl', ['$scope', 'postService', 'post', 'authService', 'userService', function($scope, postService, post, authService, userService) {
     //used to get individual posts
     $scope.post = post;
 
@@ -45,6 +45,11 @@
       });
       $scope.body = '';
     };
+
+    $scope.deleteComment = function(comment) {
+      postService.deleteUserComment(post, comment);
+      $scope.post.comments.splice($scope.post.comments.indexOf(comment), 1);
+    }
 
     $scope.incrementUpvotes = function(comment) {
       postService.upvoteComment(post, comment);

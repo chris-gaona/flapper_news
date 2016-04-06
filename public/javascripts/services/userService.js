@@ -20,20 +20,11 @@
     user.deleteUserPost = function(post) {
       return $http.delete('/posts/' + post._id, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
-      }).then(function() {
-        user.userStuff.data.userPosts.splice(user.userStuff.data.userPosts.indexOf(post), 1);
-        // angular.copy(data, post);
+      }).then(function(response) {
+        console.log(response);
+        // user.userStuff.data.userPosts.splice(user.userStuff.data.userPosts.indexOf(post), 1);
       });
     };
-
-    // user.deletePost = function(post) {
-    //   console.log('yes sir');
-    //   return $http.delete('/posts/' + post._id, {
-    //     headers: {Authorization: 'Bearer '+authService.getToken()}
-    //   }).then(function(data) {
-    //     // angular.copy(data, post);
-    //   });
-    // };
 
     //can't forget this return!!!
     return user;

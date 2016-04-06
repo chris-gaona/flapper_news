@@ -22,6 +22,7 @@
       })
       .success(function(data) {
         o.posts.push(data);
+        console.log(o.posts);
       });
     };
 
@@ -43,6 +44,16 @@
     o.addComment = function(id, comment) {
       return $http.post('/posts/' + id + '/comments', comment, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
+      });
+    };
+
+    o.deleteUserComment = function(post, comment) {
+      return $http.delete('/posts/' + post._id + '/comments/' + comment._id, {
+        headers: {Authorization: 'Bearer '+authService.getToken()}
+      }).then(function(response) {
+        console.log('comment deleted');
+        console.log(response);
+        o.userCommentDeleted = true;
       });
     };
 
