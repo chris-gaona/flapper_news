@@ -1,69 +1,63 @@
 (function() {
   'use strict';
 
-  angular.module('flapperNews')
-
-  .config([
-    '$stateProvider',
-    function($stateProvider) {
-      $stateProvider
-      .state('home', {
-        parent: 'root',
-        url: '/home',
-        views: {
-          'container@': {
-            templateUrl: '/partials/home',
-            controller: 'mainCtrl',
-            controllerAs: 'main'
-          }
-        },
-        resolve: {
-          postPromise: ['postService', function(postService){
-            return postService.getAll();
-          }]
+  //--------------------------------------
+  //MAIN CALLBACK FUNCTIONS
+  //--------------------------------------
+  function config($stateProvider) {
+    $stateProvider
+    .state('home', {
+      parent: 'root',
+      url: '/home',
+      views: {
+        'container@': {
+          templateUrl: '/partials/home',
+          controller: 'mainCtrl',
+          controllerAs: 'main'
         }
-      });
-    }
-  ])
+      },
+      resolve: {
+        postPromise: ['postService', function(postService){
+          return postService.getAll();
+        }]
+      }
+    });
+  } //config callback
 
-
-  .controller('mainCtrl', ['$scope', 'postService', 'authService', function($scope, postService, authService) {
+  function mainCtrl(postService, authService) {
+    var vm = this;
 
     if (postService.message === '') {
-      $scope.addMessage = false;
+      vm.addMessage = false;
     } else {
-      $scope.addMessage = true;
-      $scope.message = postService.message;
+      vm.addMessage = true;
+      vm.message = postService.message;
     }
 
     //used to display all posts
-    $scope.posts = postService.posts;
+    vm.posts = postService.posts;
 
-    $scope.isLoggedIn = authService.isLoggedIn;
+    vm.isLoggedIn = authService.isLoggedIn;
 
-    $scope.addPost = function() {
-      if (!$scope.title || $scope.title === '') {
+    vm.addPost = function() {
+      if (!vm.title || vm.title === '') {
         return;
       }
 
       postService.create({
-        title: $scope.title,
-        link: $scope.link
+        title: vm.title,
+        link: vm.link
       });
-      $scope.title = '';
-      $scope.link = '';
-      $scope.addMessage = false;
+      vm.title = '';
+      vm.link = '';
+      vm.addMessage = false;
     };
 
-    // $scope.deletePost = function(post) {
-    //   postService.deletePost(post);
-    // };
-
-    $scope.incrementUpvotes = function(post) {
+    vm.incrementUpvotes = function(post) {
       postService.upvote(post);
     };
 
-    $scope.getUpvotedColor = function(post) {
+    vm.getUpvotedColor = function(post) {
       if (isUpvotedByCurrentUser(post)) {
         return 'text-primary';
       } else {
@@ -74,7 +68,15 @@
     function isUpvotedByCurrentUser(post) {
       return post.usersWhoUpvoted.indexOf(authService.currentUserId()) != -1;
     };
+  } //mainCtrl callback
 
-  }]);
+  //--------------------------------------
+  //ANGULAR
+  //--------------------------------------
+  angular.module('flapperNews')
+
+  .config(['$stateProvider', config])
+
+  .controller('mainCtrl', ['postService', 'authService', mainCtrl]);
 
 })();

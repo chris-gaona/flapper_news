@@ -1,15 +1,15 @@
 <div class="page-header">
   <h3>
-    <a ng-show="post.link" href="{{post.link}}">
-      {{post.title}}
+    <a ng-show="post.post.link" href="{{post.post.link}}">
+      {{post.post.title}}
     </a>
     <span ng-hide="post.link">
-      {{post.title}}
+      {{post.post.title}}
     </span>
   </h3>
 </div>
 
-<div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+<div ng-repeat="comment in post.post.comments | orderBy:'-upvotes'">
   <span class="glyphicon glyphicon-thumbs-up"
     ng-click="incrementUpvotes(comment)" ng-class="getUpvotedColor(comment)"></span>
   {{comment.upvotes}} - by {{comment.author}} on {{comment.date | date}} at {{comment.date | date: 'shortTime'}}
@@ -21,15 +21,15 @@
   </span>
 </div>
 
-<div ng-hide="isLoggedIn()">
+<div ng-hide="post.isLoggedIn()">
   <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
 </div>
 
-<form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
+<form ng-submit="post.addComment()" ng-show="post.isLoggedIn()" style="margin-top:30px;">
   <h3>Add a new comment</h3>
 
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Comment" ng-model="body" />
+    <input type="text" class="form-control" placeholder="Comment" ng-model="post.body" />
   </div>
   <button type="submit" class="btn btn-primary">Post</button>
 </form>

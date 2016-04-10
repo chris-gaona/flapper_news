@@ -1,51 +1,51 @@
 (function() {
   'use strict';
 
-  angular.module('flapperNews')
-
-  .config([
-    '$stateProvider',
-    function($stateProvider) {
-      $stateProvider
-      .state('users', {
-        parent: 'root',
-        url: '/user/{username}',
-        views: {
-          'container@': {
-            templateUrl: '/partials/user',
-            controller: 'usersCtrl',
-            controllerAs: 'user'
-          }
-        },
-        resolve: {
-          user: ['$stateParams', 'userService', function($stateParams, userService) {
-            return userService.getUser($stateParams.username);
-          }]
+  //--------------------------------------
+  //MAIN CALLBACK FUNCTIONS
+  //--------------------------------------
+  function config($stateProvider) {
+    $stateProvider
+    .state('users', {
+      parent: 'root',
+      url: '/user/{username}',
+      views: {
+        'container@': {
+          templateUrl: '/partials/user',
+          controller: 'usersCtrl',
+          controllerAs: 'user'
         }
-      });
-    }
-  ])
+      },
+      resolve: {
+        user: ['$stateParams', 'userService', function($stateParams, userService) {
+          return userService.getUser($stateParams.username);
+        }]
+      }
+    });
+  } //config callback
 
-  .controller('usersCtrl', ['postService', 'authService', 'userService', 'user', function(postService, authService, userService, user) {
-    this.user = user;
+  function usersCtrl(postService, authService, userService, user) {
+    var vm = this;
+
+    vm.user = user;
 
     //checks if user is owner of user personal page visited
-    if (authService.currentUserId() != this.user._id) {
-      this.isCorrectUser = false;
+    if (authService.currentUserId() != vm.user._id) {
+      vm.isCorrectUser = false;
     } else {
-      this.isCorrectUser = true;
+      vm.isCorrectUser = true;
     }
 
-    this.deletePost = function(post) {
+    vm.deletePost = function(post) {
       userService.deleteUserPost(post);
-      this.user.userPosts.splice(this.user.userPosts.indexOf(post), 1);
+      vm.user.userPosts.splice(vm.user.userPosts.indexOf(post), 1);
     };
 
-    this.incrementUpvotes = function(post) {
+    vm.incrementUpvotes = function(post) {
       postService.upvote(post);
     };
 
-    this.getUpvotedColor = function(post) {
+    vm.getUpvotedColor = function(post) {
       if (isUpvotedByCurrentUser(post)) {
         return 'text-primary';
       } else {
@@ -56,7 +56,15 @@
     function isUpvotedByCurrentUser(post) {
       return post.usersWhoUpvoted.indexOf(authService.currentUserId()) != -1;
     };
+  } //usersCtrl callback
 
-  }]);
+  //--------------------------------------
+  //ANGULAR
+  //--------------------------------------
+  angular.module('flapperNews')
+
+  .config(['$stateProvider', config])
+
+  .controller('usersCtrl', ['postService', 'authService', 'userService', 'user', usersCtrl]);
 
 })();

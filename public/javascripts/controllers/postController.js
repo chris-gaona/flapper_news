@@ -1,66 +1,65 @@
 (function() {
   'use strict';
 
-  angular.module('flapperNews')
-
-  .config([
-    '$stateProvider',
-    function($stateProvider) {
-      $stateProvider
-      .state('posts', {
-        parent: 'root',
-        url: '/posts/{id}',
-        views: {
-          'container@': {
-            templateUrl: '/partials/post',
-            controller: 'postsCtrl',
-            controllerAs: 'posts'
-          }
-        },
-        resolve: {
-          post: ['$stateParams', 'postService', function($stateParams, postService) {
-            return postService.get($stateParams.id);
-          }]
+  //--------------------------------------
+  //MAIN CALLBACK FUNCTIONS
+  //--------------------------------------
+  function config($stateProvider) {
+    $stateProvider
+    .state('posts', {
+      parent: 'root',
+      url: '/posts/{id}',
+      views: {
+        'container@': {
+          templateUrl: '/partials/post',
+          controller: 'postsCtrl',
+          controllerAs: 'post'
         }
-      });
-    }
-  ])
+      },
+      resolve: {
+        post: ['$stateParams', 'postService', function($stateParams, postService) {
+          return postService.get($stateParams.id);
+        }]
+      }
+    });
+  } //config FUNCTIONS
 
+  function postsCtrl(postService, post, authService, userService) {
+    var vm = this;
 
-  .controller('postsCtrl', ['$scope', 'postService', 'post', 'authService', 'userService', function($scope, postService, post, authService, userService) {
     //used to get individual posts
     if (post.length === 0) {
-      $scope.log = 'Sorry no comments yet!';
+      vm.log = 'Sorry no comments yet!';
     }
 
-    $scope.post = post;
+    vm.post = post;
 
-    $scope.isLoggedIn = authService.isLoggedIn;
+    vm.isLoggedIn = authService.isLoggedIn;
 
-    $scope.addComment = function() {
-      if ($scope.body === '') {
+    vm.addComment = function() {
+      if (vm.body === '') {
         return;
       }
 
       postService.addComment(post._id, {
-        body: $scope.body,
+        body: vm.body,
         author: 'user',
       }).success(function(comment) {
-        $scope.post.comments.push(comment);
+        vm.post.comments.push(comment);
       });
-      $scope.body = '';
+      vm.body = '';
     };
 
-    $scope.deleteComment = function(comment) {
+    vm.deleteComment = function(comment) {
       postService.deleteUserComment(post, comment);
-      $scope.post.comments.splice($scope.post.comments.indexOf(comment), 1);
+      vm.post.comments.splice(vm.post.comments.indexOf(comment), 1);
     }
 
-    $scope.incrementUpvotes = function(comment) {
+    vm.incrementUpvotes = function(comment) {
       postService.upvoteComment(post, comment);
     };
 
-    $scope.getUpvotedColor = function(comment) {
+    vm.getUpvotedColor = function(comment) {
       if (isUpvotedByCurrentUser(comment)) {
         return 'text-primary';
       } else {
@@ -73,14 +72,22 @@
     };
 
     //checks if user is owner of user personal page visited
-    $scope.isCorrectUser = function(comment) {
+    vm.isCorrectUser = function(comment) {
       if (authService.currentUser() != comment.author) {
         return false;
       } else {
         return true;
       }
     }
+  } //postsCtrl callback
 
-  }]);
+  //--------------------------------------
+  //ANGULAR
+  //--------------------------------------
+  angular.module('flapperNews')
+
+  .config(['$stateProvider', config])
+
+  .controller('postsCtrl', ['postService', 'post', 'authService', 'userService', postsCtrl]);
 
 })();
