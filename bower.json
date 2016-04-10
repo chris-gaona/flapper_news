@@ -1,0 +1,11 @@
+{
+  "name": "flapper_news",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "latest",
+    "font-awesome": "latest",
+    "bootstrap-css-only": "latest",
+    "angular-ui-bootstrap": "latest",
+    "angular-ui-router": "latest"
+  }
+}
