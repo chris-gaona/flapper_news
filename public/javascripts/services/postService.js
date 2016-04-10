@@ -1,42 +1,42 @@
 (function() {
   'use strict';
 
-  angular.module('flapperNews')
-
-  .factory('postService', ['$http', 'authService', 'userService', function($http, authService, userService) {
-    var o = {
+  //--------------------------------------
+  //MAIN CALLBACK FUNCTIONS
+  //--------------------------------------
+  function postService($http, authService, userService) {
+    var postService = {
       posts: []
     };
 
     //get all posts
-    o.getAll = function() {
+    postService.getAll = function() {
       return $http.get('/posts').success(function(response) {
         if (response.length > 0) {
-          angular.copy(response, o.posts);
-          o.message = '';
+          angular.copy(response, postService.posts);
+          postService.message = '';
         } else {
           console.log('Sorry no posts yet!');
-          o.message = 'Sorry no posts yet!';
-          angular.copy(response, o.posts);
+          postService.message = 'Sorry no posts yet!';
+          angular.copy(response, postService.posts);
         }
       }).error(function(response, status){
             console.log('Error' + response + status);
-            o.message = 'Oops, something went wrong!';
+            postService.message = 'Oops, something went wrong!';
         });
     };
 
     //create new posts
-    o.create = function(post) {
+    postService.create = function(post) {
       return $http.post('/posts', post, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
       })
       .success(function(data) {
-        o.posts.push(data);
-        console.log(o.posts);
+        postService.posts.push(data);
       });
     };
 
-    o.upvote = function(post) {
+    postService.upvote = function(post) {
       return $http.put('/posts/' + post._id + '/upvote', null, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
       }).success(function(upvotedPost) {
@@ -45,19 +45,19 @@
       });
     };
 
-    o.get = function(id) {
+    postService.get = function(id) {
       return $http.get('/posts/' + id).then(function(res) {
         return res.data;
       });
     };
 
-    o.addComment = function(id, comment) {
+    postService.addComment = function(id, comment) {
       return $http.post('/posts/' + id + '/comments', comment, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
       });
     };
 
-    o.deleteUserComment = function(post, comment) {
+    postService.deleteUserComment = function(post, comment) {
       return $http.delete('/posts/' + post._id + '/comments/' + comment._id, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
       }).then(function(response) {
@@ -66,7 +66,7 @@
       });
     };
 
-    o.upvoteComment = function(post, comment) {
+    postService.upvoteComment = function(post, comment) {
       return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
       }).success(function(upvotedComment) {
@@ -75,7 +75,14 @@
       });
     };
 
-    return o;
-  }]);
+    return postService;
+  }
+
+  //--------------------------------------
+  //ANGULAR
+  //--------------------------------------
+  angular.module('flapperNews')
+
+  .factory('postService', ['$http', 'authService', 'userService', postService]);
 
 })();

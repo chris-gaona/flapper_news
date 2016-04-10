@@ -9,15 +9,15 @@
   </h3>
 </div>
 
-<div ng-repeat="comment in post.post.comments | orderBy:'-upvotes'">
+<div ng-repeat="comment in post.post.comments | orderBy: '-date'">
   <span class="glyphicon glyphicon-thumbs-up"
-    ng-click="incrementUpvotes(comment)" ng-class="getUpvotedColor(comment)"></span>
+    ng-click="post.incrementUpvotes(comment)" ng-class="post.getUpvotedColor(comment)"></span>
   {{comment.upvotes}} - by {{comment.author}} on {{comment.date | date}} at {{comment.date | date: 'shortTime'}}
   <span style="font-size:20px; margin-left:10px;">
     {{comment.body}}
   </span>
-  <span ng-show="isCorrectUser(comment)">
-    | <a href="" ng-click="deleteComment(comment)">Delete</a>
+  <span ng-show="post.isCorrectUser(comment)">
+    | <a href="" ng-click="post.deleteComment(comment)">Delete</a>
   </span>
 </div>
 

@@ -37,11 +37,11 @@
   });
 
   router.delete('/posts/:post/comments/:comment', auth, function(req, res, next) {
-    if(req.post.author != req.payload.username) {
+    if(req.comment.author != req.payload.username) {
       console.log('sorry no can do');
       return res.status(401).send("invalid authorization");
     }
-    
+
     req.comment.remove(function(err) {
       if (err) {return next(err);}
 

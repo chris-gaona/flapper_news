@@ -1,14 +1,15 @@
 (function() {
   'use strict';
 
-  angular.module('flapperNews')
-
-  .factory('userService', ['$http', 'authService', function($http, authService) {
-    var user = {
+  //--------------------------------------
+  //MAIN CALLBACK FUNCTIONS
+  //--------------------------------------
+  function userService($http, authService) {
+    var userService = {
       userStuff: []
     };
 
-    user.getUser = function(username) {
+    userService.getUser = function(username) {
       return $http.get('/user/' + username, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
       }).then(function(res) {
@@ -17,7 +18,7 @@
       });
     };
 
-    user.deleteUserPost = function(post) {
+    userService.deleteUserPost = function(post) {
       return $http.delete('/posts/' + post._id, {
         headers: {Authorization: 'Bearer '+authService.getToken()}
       }).then(function(response) {
@@ -27,8 +28,14 @@
     };
 
     //can't forget this return!!!
-    return user;
+    return userService;
+  }
 
-  }]);
+  //--------------------------------------
+  //ANGULAR
+  //--------------------------------------
+  angular.module('flapperNews')
+
+  .factory('userService', ['$http', 'authService', userService]);
 
 })();
