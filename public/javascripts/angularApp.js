@@ -37,9 +37,6 @@
     $scope.logOut = authService.logOut;
   }]);
 
-  // TODO: add post delete functionality
-      // TODO: user can only delete their own posts / comments
-      // TODO: if you delete a comment...everything else stays as is
   // TODO: query usernames to make sure user who registers has unique username
 
 })();

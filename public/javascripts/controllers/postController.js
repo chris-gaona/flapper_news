@@ -28,6 +28,10 @@
 
   .controller('postsCtrl', ['$scope', 'postService', 'post', 'authService', 'userService', function($scope, postService, post, authService, userService) {
     //used to get individual posts
+    if (post.length === 0) {
+      $scope.log = 'Sorry no comments yet!';
+    }
+
     $scope.post = post;
 
     $scope.isLoggedIn = authService.isLoggedIn;

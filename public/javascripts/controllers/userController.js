@@ -25,11 +25,11 @@
     }
   ])
 
-  .controller('usersCtrl', ['$scope', 'postService', 'authService', 'userService', function($scope, postService, authService, userService) {
-    $scope.user = userService.userStuff.data;
+  .controller('usersCtrl', ['$scope', 'postService', 'authService', 'userService', 'user', function($scope, postService, authService, userService, user) {
+    $scope.user = user;
 
     //checks if user is owner of user personal page visited
-    if (authService.currentUserId() != userService.userStuff.data._id) {
+    if (authService.currentUserId() != user._id) {
       $scope.isCorrectUser = false;
     } else {
       $scope.isCorrectUser = true;

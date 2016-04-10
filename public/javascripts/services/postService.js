@@ -10,9 +10,19 @@
 
     //get all posts
     o.getAll = function() {
-      return $http.get('/posts').success(function(data) {
-        angular.copy(data, o.posts);
-      });
+      return $http.get('/posts').success(function(response) {
+        if (response.length > 0) {
+          angular.copy(response, o.posts);
+          o.message = '';
+        } else {
+          console.log('Sorry no posts yet!');
+          o.message = 'Sorry no posts yet!';
+          angular.copy(response, o.posts);
+        }
+      }).error(function(response, status){
+            console.log('Error' + response + status);
+            o.message = 'Oops, something went wrong!';
+        });
     };
 
     //create new posts
@@ -53,7 +63,6 @@
       }).then(function(response) {
         console.log('comment deleted');
         console.log(response);
-        o.userCommentDeleted = true;
       });
     };
 

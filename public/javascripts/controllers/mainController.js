@@ -28,6 +28,13 @@
 
   .controller('mainCtrl', ['$scope', 'postService', 'authService', function($scope, postService, authService) {
 
+    if (postService.message === '') {
+      $scope.addMessage = false;
+    } else {
+      $scope.addMessage = true;
+      $scope.message = postService.message;
+    }
+
     //used to display all posts
     $scope.posts = postService.posts;
 
@@ -44,6 +51,7 @@
       });
       $scope.title = '';
       $scope.link = '';
+      $scope.addMessage = false;
     };
 
     // $scope.deletePost = function(post) {
