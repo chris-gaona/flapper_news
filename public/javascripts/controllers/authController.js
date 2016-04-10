@@ -17,6 +17,7 @@
           'container@': {
             templateUrl: '/partials/login',
             controller: 'AuthCtrl',
+            controllerAs: 'auth'
           }
         },
         onEnter: ['$state', 'authService', function($state, authService) {

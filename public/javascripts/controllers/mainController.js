@@ -13,7 +13,8 @@
         views: {
           'container@': {
             templateUrl: '/partials/home',
-            controller: 'mainCtrl'
+            controller: 'mainCtrl',
+            controllerAs: 'main'
           }
         },
         resolve: {

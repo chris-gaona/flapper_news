@@ -17,12 +17,6 @@
       });
     };
 
-    // o.get = function(id) {
-    //   return $http.get('/posts/' + id).then(function(res) {
-    //     return res.data;
-    //   });
-    // };
-
     user.deleteUserPost = function(post) {
       return $http.delete('/posts/' + post._id, {
         headers: {Authorization: 'Bearer '+authService.getToken()}

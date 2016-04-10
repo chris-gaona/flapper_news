@@ -3,10 +3,10 @@
 </div>
 
 <p>
-  Hello {{user.username}}!
+  Hello {{user.user.username}}!
 </p>
 
-<div ng-repeat="post in user.userPosts | orderBy: '-date'">
+<div ng-repeat="post in user.user.userPosts | orderBy: '-date'">
   <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)" ng-class="getUpvotedColor(post)"></span>
     {{post.upvotes}}
   <span style="font-size:20px; margin-left:10px;">
@@ -27,7 +27,7 @@
       <a href="#/posts/{{post._id}}">Comments</a>
       ({{post.comments.length}})
   </span>
-  <span ng-show="isCorrectUser">
-    | <a href="" ng-click="deletePost(post)">Delete</a>
+  <span ng-show="user.isCorrectUser">
+    | <a href="" ng-click="user.deletePost(post)">Delete</a>
   </span>
 </div>

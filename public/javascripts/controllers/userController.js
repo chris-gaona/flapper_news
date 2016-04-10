@@ -13,7 +13,8 @@
         views: {
           'container@': {
             templateUrl: '/partials/user',
-            controller: 'usersCtrl'
+            controller: 'usersCtrl',
+            controllerAs: 'user'
           }
         },
         resolve: {
@@ -25,26 +26,26 @@
     }
   ])
 
-  .controller('usersCtrl', ['$scope', 'postService', 'authService', 'userService', 'user', function($scope, postService, authService, userService, user) {
-    $scope.user = user;
+  .controller('usersCtrl', ['postService', 'authService', 'userService', 'user', function(postService, authService, userService, user) {
+    this.user = user;
 
     //checks if user is owner of user personal page visited
-    if (authService.currentUserId() != user._id) {
-      $scope.isCorrectUser = false;
+    if (authService.currentUserId() != this.user._id) {
+      this.isCorrectUser = false;
     } else {
-      $scope.isCorrectUser = true;
+      this.isCorrectUser = true;
     }
 
-    $scope.deletePost = function(post) {
+    this.deletePost = function(post) {
       userService.deleteUserPost(post);
-      $scope.user.userPosts.splice($scope.user.userPosts.indexOf(post), 1);
+      this.user.userPosts.splice(this.user.userPosts.indexOf(post), 1);
     };
 
-    $scope.incrementUpvotes = function(post) {
+    this.incrementUpvotes = function(post) {
       postService.upvote(post);
     };
 
-    $scope.getUpvotedColor = function(post) {
+    this.getUpvotedColor = function(post) {
       if (isUpvotedByCurrentUser(post)) {
         return 'text-primary';
       } else {
