@@ -9,20 +9,24 @@
   </h3>
 </div>
 
-<div ng-repeat="comment in post.post.comments | orderBy: '-date'">
-  <span class="glyphicon glyphicon-thumbs-up"
+<div class="comment-group" ng-repeat="comment in post.post.comments | orderBy: '-date'">
+  <span id="upvote" class="glyphicon glyphicon-thumbs-up"
     ng-click="post.incrementUpvotes(comment)" ng-class="post.getUpvotedColor(comment)"></span>
-  {{comment.upvotes}} - by {{comment.author}} on {{comment.date | date}} at {{comment.date | date: 'shortTime'}}
+  {{comment.upvotes}}
   <span style="font-size:20px; margin-left:10px;">
     {{comment.body}}
   </span>
   <span ng-show="post.isCorrectUser(comment)">
     | <a href="" ng-click="post.deleteComment(comment)">Delete</a>
   </span>
+  <p>
+    {{comment.author}} | {{comment.date | date}} at {{comment.date | date: 'shortTime'}}
+  </p>
 </div>
 
-<div ng-hide="post.isLoggedIn()">
-  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
+<div class="login-register" ng-hide="post.isLoggedIn()">
+  <h3 class="join">Join the conversations!</h3>
+  <h4>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h4>
 </div>
 
 <form ng-submit="post.addComment()" ng-show="post.isLoggedIn()" style="margin-top:30px;">

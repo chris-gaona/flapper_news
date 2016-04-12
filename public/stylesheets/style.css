@@ -1,7 +1,12 @@
+html, body, * {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0;
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #eee;
 }
 
 a {
@@ -12,6 +17,66 @@ a {
   opacity: 0;
   transition: all 0.3s;
 }
+
+/************/
+/*home.ejs*/
+/************/
+.comment-group {
+  padding: 15px 20px 0 20px;
+  margin: 20px 0;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px #ccc;
+}
+
+.comment-group span.post-body {
+  /*border: 1px solid red;*/
+}
+
+.comment-group p {
+  position: relative;
+  padding: 10px;
+  margin: 0;
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.comment-group span#upvote {
+  position: relative;
+  top: 5px;
+  font-size: 20px;
+  padding: 5px 0 5px 5px;
+}
+
+.login-register {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 1px 1px #ccc;
+  border-radius: 2px;
+  margin-bottom: 30px;
+}
+
+.login-register h4 {
+  padding: 0;
+  margin: 0;
+}
+
+.login-register h3.join {
+  padding: 0 0 20px 0;
+  margin: 0;
+}
+
+/************/
+/*index.ejs*/
+/************/
+#footer {
+  background-color: #fff;
+  padding: 20px;
+}
+
+
+
+
 
 .ng-modal-overlay {
   /* A dark translucent div that covers the whole screen */

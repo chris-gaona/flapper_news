@@ -2,7 +2,7 @@
   <h1>Flapper News</h1>
 </div>
 
-<like-book like="main.likeFunction()"></like-book>
+<!-- <like-book like="main.likeFunction()"></like-book>
 
 <notification message="{{main.message}}"></notification>
 
@@ -19,14 +19,15 @@
     Modal Content Goes Here
   </p>
 </modal-dialog>
+<br> -->
 
 
 <span ng-show="main.addMessage">{{message}}</span>
 
-<div ng-repeat="post in main.posts | orderBy: '-date'">
-  <span class="glyphicon glyphicon-thumbs-up" ng-click="main.incrementUpvotes(post)" ng-class="main.getUpvotedColor(post)"></span>
+<div class="comment-group" ng-repeat="post in main.posts | orderBy: '-date'">
+  <span id="upvote" class="glyphicon glyphicon-thumbs-up" ng-click="main.incrementUpvotes(post)" ng-class="main.getUpvotedColor(post)"></span>
     {{post.upvotes}}
-  <span style="font-size:20px; margin-left:10px;">
+  <span class="post-body" style="font-size:20px; margin-left:10px;">
     <a ng-show="post.link" href="{{post.link}}">
       {{post.title}}
     </a>
@@ -34,20 +35,21 @@
       {{post.title}}
     </span>
   </span>
-  <span ng-show="post.author">
-    posted by <a href="#/user/{{post.author}}">{{post.author}}</a>
-  </span>
-  <span ng-show="post.date">
-    on {{post.date | date}} at {{post.date | date : 'shortTime'}} |
-  </span>
-  <span>
+  <p ng-show="post.author">
+    <a href="#/user/{{post.author}}">{{post.author}}</a> |
+    <span ng-show="post.date">
+      {{post.date | date}} at {{post.date | date : 'shortTime'}} |
+    </span>
+    <span>
       <a href="#/posts/{{post._id}}">Comments</a>
       ({{post.comments.length}})
-  </span>
-</div>
+    </span>
+  </p>
+</div> <!--ng-repeat-->
 
-<div ng-hide="main.isLoggedIn()">
-  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+<div class="login-register" ng-hide="main.isLoggedIn()">
+  <h3 class="join">Join the conversations!</h3>
+  <h4>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h4>
 </div>
 
 <form ng-submit="main.addPost()" ng-show="main.isLoggedIn()" style="margin-top:30px;">
