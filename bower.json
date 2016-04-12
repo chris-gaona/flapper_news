@@ -5,7 +5,7 @@
     "angular": "latest",
     "font-awesome": "latest",
     "bootstrap-css-only": "latest",
-    "angular-ui-bootstrap": "latest",
+    "angular-bootstrap": "latest",
     "angular-ui-router": "latest"
   }
 }

@@ -2,7 +2,8 @@
   'use strict';
 
   angular.module('flapperNews', [
-    'ui.router'
+    'ui.router',
+    'ui.bootstrap'
   ])
 
   //this is considered the parent state

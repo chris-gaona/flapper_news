@@ -68,6 +68,17 @@
     function isUpvotedByCurrentUser(post) {
       return post.usersWhoUpvoted.indexOf(authService.currentUserId()) != -1;
     };
+
+    vm.modalShown = false;
+    vm.toggleModal = function() {
+      vm.modalShown = !vm.modalShown;
+    };
+
+    vm.likeFunction = function() {
+      alert('I like the post');
+    };
+
+    vm.message = 'Post Created!';
   } //mainCtrl callback
 
   //--------------------------------------

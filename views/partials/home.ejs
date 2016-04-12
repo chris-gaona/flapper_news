@@ -2,6 +2,25 @@
   <h1>Flapper News</h1>
 </div>
 
+<like-book like="main.likeFunction()"></like-book>
+
+<notification message="{{main.message}}"></notification>
+
+<span>This is the textbox on the page</span>
+<input type="text" ng-model="commentText">
+<br>
+<span>This is the texbox on the directive</span>
+<book-comment text="commentText"></book-comment>
+<br>
+
+<button ng-click='main.toggleModal()'>Open Modal Dialog</button>
+<modal-dialog show="main.modalShown" width="300px" height="200px">
+  <p>
+    Modal Content Goes Here
+  </p>
+</modal-dialog>
+
+
 <span ng-show="main.addMessage">{{message}}</span>
 
 <div ng-repeat="post in main.posts | orderBy: '-date'">
