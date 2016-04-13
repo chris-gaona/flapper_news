@@ -69,16 +69,21 @@
       return post.usersWhoUpvoted.indexOf(authService.currentUserId()) != -1;
     };
 
-    vm.modalShown = false;
-    vm.toggleModal = function() {
-      vm.modalShown = !vm.modalShown;
-    };
-
-    vm.likeFunction = function() {
-      alert('I like the post');
-    };
-
-    vm.message = 'Post Created!';
+    // vm.colors = ['pink', 'yellow', 'beige'];
+    // vm.change = function() {
+    //   return vm.colors[Math.floor((Math.random()*3))];
+    // };
+    //
+    // // vm.modalShown = false;
+    // // vm.toggleModal = function() {
+    // //   vm.modalShown = !vm.modalShown;
+    // // };
+    //
+    // vm.likeFunction = function() {
+    //   alert('I like the post');
+    // };
+    //
+    // vm.message = 'Post Created!';
   } //mainCtrl callback
 
   //--------------------------------------

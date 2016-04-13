@@ -1,21 +1,30 @@
-<div class="page-header">
+<!-- <div class="page-header">
   <h1>Flapper News</h1>
-</div>
+</div> -->
 
-<div ng-show="auth.error" class="alert alert-danger row">
-  <span>{{auth.error.message}}</span>
-</div>
+<div class='container' ng-show='show'>
+  <div class='modal-overlay' ng-click='hideModal()'></div>
+  <div class='modal-dialog' ng-style='modalStyle'>
+    <div class='modal-close' ng-click='hideModal()'>X</div>
 
-<form ng-submit="auth.logIn()" style="margin-top:30px;">
-  <h3>Log In</h3>
+    <div class='modal-dialog-content flip-vertical' ng-controller="AuthCtrl as auth">
+      <div ng-show="auth.error" class="alert alert-danger" id="login-register-alert">
+        <span>{{auth.error.message}}</span>
+      </div>
+      <form class="login-form" name="login" ng-submit="auth.logIn()">
+        <h3>Log In</h3>
 
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Username" ng-model="auth.user.username" auto-focus/>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Username" name="username" ng-model="auth.user.username" auto-focus/>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" name="password" ng-model="auth.user.password" />
+        </div>
+
+        <ng-transclude></ng-transclude>
+        <!-- <button type="submit" class="btn btn-primary">Log In</button> -->
+      </form>
+    </div>
   </div>
-
-  <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password" ng-model="auth.user.password" />
-  </div>
-
-  <button type="submit" class="btn btn-primary">Log In</button>
-</form>
+</div>

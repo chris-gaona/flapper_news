@@ -17,7 +17,8 @@
         views: {
           'navbar': {
             templateUrl: 'partials/navbar',
-            controller: 'navCtrl'
+            controller: 'navCtrl',
+            controllerAs: 'nav'
           },
           'footer': {
             templateUrl: 'partials/footer',
@@ -32,12 +33,24 @@
   ])
 
 
-  .controller('navCtrl', ['$scope', 'authService', function($scope, authService) {
-    $scope.isLoggedIn = authService.isLoggedIn;
-    $scope.currentUser = authService.currentUser;
-    $scope.logOut = authService.logOut;
+  .controller('navCtrl', ['authService', function(authService) {
+    var vm = this;
+    vm.isLoggedIn = authService.isLoggedIn;
+    vm.currentUser = authService.currentUser;
+    vm.logOut = authService.logOut;
+
+    vm.modalShown = false;
+    vm.toggleModal = function() {
+      //adds toggle effect
+      vm.modalShown = !vm.modalShown
+    };
+
+    vm.hideModal = function() {
+        vm.modalShown = false;
+    };
   }]);
 
   // TODO: query usernames to make sure user who registers has unique username
+  // TODO: make upvote a toggle
 
 })();

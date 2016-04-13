@@ -78,7 +78,7 @@ a {
 
 
 
-.ng-modal-overlay {
+.modal-overlay {
   /* A dark translucent div that covers the whole screen */
   position:absolute;
   z-index:9999;
@@ -89,7 +89,7 @@ a {
   background-color:#000000;
   opacity: 0.8;
 }
-.ng-modal-dialog {
+.modal-dialog {
   /* A centered div above the overlay with a box shadow. */
   z-index:10000;
   position: absolute;
@@ -104,12 +104,17 @@ a {
 
   background-color: #fff;
   box-shadow: 4px 4px 80px #000;
+  border-radius: 5px;
 }
-.ng-modal-dialog-content {
+
+.modal-dialog-content {
+  position: relative;
+  top: 30px;
   padding:10px;
   text-align: left;
 }
-.ng-modal-close {
+
+.modal-close {
   position: absolute;
   top: 3px;
   right: 5px;
@@ -119,4 +124,32 @@ a {
   display: inline-block;
   font-weight: bold;
   font-family: 'arial', 'sans-serif';
+}
+
+/*.modal-dialog-content.flip-vertical {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: rotateX(-70deg);
+  -moz-transform: rotateX(-70deg);
+  -ms-transform: rotateX(-70deg);
+  -o-transform: rotateX(-70deg);
+  transform: rotateX(-70deg);
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0; }
+.modal-dialog-content.flip-vertical.opened {
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    -ms-transform: rotateX(0deg);
+    -o-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    opacity: 1; }*/
+
+form.login-form {
+  position: relative;
+  padding: 0 15px;
 }

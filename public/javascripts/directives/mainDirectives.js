@@ -15,6 +15,34 @@
     };
   }])
 
+  .directive('loginModal', function() {
+    return {
+      restrict: 'AE',
+      scope: {
+        show: '='
+      },
+      transclude: true,
+      // replace: true,
+      link: function(scope, elem, attrs) {
+        scope.modalStyle = {};
+
+        if (attrs.width) {
+          scope.modalStyle.width = attrs.width;
+        }
+
+        if (attrs.height) {
+          scope.modalStyle.height = attrs.height;
+        }
+
+        scope.hideModal = function() {
+          scope.show = false;
+        }
+      },
+      templateUrl: 'partials/login'
+      // template: "<div class='container' ng-show='show'><div class='modal-overlay' ng-click='hideModal()'></div><div class='modal-dialog' ng-style='modalStyle'><div class='modal-close' ng-click='hideModal()'>X</div><div class='modal-dialog-content'></div></div></div>"
+    };
+  })
+
   // .directive('modalDialog', function() {
   //   return {
   //     restrict: 'E',
@@ -66,6 +94,38 @@
   //         text: '='
   //     },
   //     template: '<input type="text" ng-model="text" />'
+  //   }
+  // })
+  //
+  // .directive('helloWorld', function() {
+  //   return {
+  //     restrict: 'A',
+  //     scope: {
+  //       color: '=',
+  //       changeColor: '&'
+  //     },
+  //     replace: true,
+  //     link: function(scope, elem, attrs) {
+  //       // elem.text(scope.main.message + ' ' + attrs.message);
+  //       elem.text(attrs.message);
+  //
+  //       elem.on('click', function() {
+  //         elem.css({
+  //           "background-color": "white"
+  //         });
+  //         scope.$apply(function() {
+  //           scope.color = "white";
+  //         });
+  //       });
+  //
+  //       elem.on('mouseover', function() {
+  //         elem.css("cursor", "pointer");
+  //         scope.$apply(function(){
+  //           scope.color = scope.changeColor();
+  //         });
+  //       });
+  //     },
+  //     template: '<h1 style="background-color:{{color}}">Hello World!</h1>'
   //   }
   // });
 

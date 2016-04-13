@@ -1,3 +1,7 @@
+<login-modal show="nav.modalShown" height="290px">
+  <button type="submit" class="btn btn-primary" ng-click="nav.hideModal()">Log In</button>
+</login-modal>
+
 <div class="navbar navbar-default navbar navbar-static-top">
   <div class="container">
     <div class="navbar-header">
@@ -13,16 +17,16 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-ex-collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show="isLoggedIn()">
-          <a>{{ currentUser() }}</a>
+        <li ng-show="nav.isLoggedIn()">
+          <a>{{ nav.currentUser() }}</a>
         </li>
-        <li ng-show="isLoggedIn()">
-          <a href="" ng-click="logOut()">Log Out</a>
+        <li ng-show="nav.isLoggedIn()">
+          <a href="" ng-click="nav.logOut()" ng-click="nav.hideModal()">Log Out</a>
         </li>
-        <li ng-hide="isLoggedIn()">
-          <a ui-sref="login">Log In</a>
+        <li ng-hide="nav.isLoggedIn()">
+          <a href="" ng-click="nav.toggleModal()">Log In</a>
         </li>
-        <li ng-hide="isLoggedIn()">
+        <li ng-hide="nav.isLoggedIn()">
           <a ui-sref="register">Register</a>
         </li>
       </ul>
