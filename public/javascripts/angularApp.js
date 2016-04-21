@@ -39,15 +39,6 @@
     vm.currentUser = authService.currentUser;
     vm.logOut = authService.logOut;
 
-    vm.modalShown = false;
-    vm.toggleModal = function() {
-      //adds toggle effect
-      vm.modalShown = !vm.modalShown
-    };
-
-    vm.hideModal = function() {
-        vm.modalShown = false;
-    };
   }]);
 
   // TODO: query usernames to make sure user who registers has unique username

@@ -1,7 +1,3 @@
-<login-modal show="nav.modalShown" height="290px">
-  <button type="submit" class="btn btn-primary" ng-click="nav.hideModal()">Log In</button>
-</login-modal>
-
 <div class="navbar navbar-default navbar navbar-static-top">
   <div class="container">
     <div class="navbar-header">
@@ -24,7 +20,7 @@
           <a href="" ng-click="nav.logOut()" ng-click="nav.hideModal()">Log Out</a>
         </li>
         <li ng-hide="nav.isLoggedIn()">
-          <a href="" ng-click="nav.toggleModal()">Log In</a>
+          <a ui-sref="login">Log In</a>
         </li>
         <li ng-hide="nav.isLoggedIn()">
           <a ui-sref="register">Register</a>
