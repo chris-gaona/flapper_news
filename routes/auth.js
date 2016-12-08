@@ -21,7 +21,7 @@
 
     user.username = req.body.username;
 
-    user.setPassword(req.body.password)
+    user.setPassword(req.body.password);
 
     user.save(function (err){
       if(err){
